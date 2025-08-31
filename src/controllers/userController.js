@@ -131,11 +131,53 @@ const deleteuser=async (req,res) =>
    
 }
 }
+const isauthenticated=async (req,res)=>
+{
+    try{
+            const user=await userService.isauthenticated(req.headers['x-access-token']);    
+            return res.status(200).json({
+                message:"user is authenticated",
+                success:true,
+                data:user,
+                error:{}
+            })
+    }catch(error)
+    {
+         return res.status(500).json({
+        data:{},
+        message:"invalid token",
+        success:false,
+        error:error
+    })
+    }
+}
+const isAdmin=async (req,res,next)=>
+{
+    try {
+        const response=await userService.isAdmin(req.body.id);
+        return res.status(200).json({
+            message:"user is admin",
+            success:true,   
+            data:response,
+            error:{}
+        })
+    }
+    catch (error) {
+            return res.status(500).json({
+            data:{},
+            message:"user is not admin",
+            success:false,
+            error:error
+        })
+}
+}
 module.exports={
     create,
     get,
     getall,
     deleteuser,
-    signin
+    signin,
+    isauthenticated,
+    isAdmin
 }
 

@@ -1,4 +1,4 @@
-const {user}=require('../models/index');
+const {user,roles}=require('../models/index');
 class userRepo{
     async  createuser(data){
         try{
@@ -64,6 +64,18 @@ async getByMail(email){
         throw{error};
         
         
+    }
+}
+async isAdmin(id){
+    try {
+        const u1=await user.findByPk(id);
+        const r1=await roles.findByPk(1);
+        const res=await u1.hasRoles(r1);
+        return res;
+}
+    catch (error) {
+        console.log("somthing wrong in the repo layer");
+        throw{error};
     }
 }
 }

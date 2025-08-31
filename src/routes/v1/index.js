@@ -11,6 +11,11 @@ routes.post('/signup',
 routes.post('/signin',
     validateAuth.validateAuth,
     usercontroller.signin);
+routes.get('/isauthenticated',
+    usercontroller.isauthenticated);
+    routes.get('/isadmin',
+        validateAuth.validateisadmin,
+    usercontroller.isAdmin);
 
 
 routes.get('/getbyid/:id',usercontroller.get);

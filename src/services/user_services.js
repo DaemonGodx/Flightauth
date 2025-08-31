@@ -39,6 +39,26 @@ class userServices{
 
     }
 }
+async isauthenticated(token)
+{
+    try{
+        const response= this.verifytoken(token);
+        if(!response)
+        {
+            throw{error:"invalid token"};
+        }
+        const user=await this.userRepo.getuser(response.id);
+        if(!user)
+        {
+            throw{error:"no user with the token"};
+        }
+        return user;
+    }catch(error)
+    {
+        console.log("somthing wrong in service layer");
+        throw{error};
+    }
+}
         
     async get(id)
     {
@@ -113,6 +133,16 @@ verifytoken(token){
             
         }
     }
+    async isAdmin(id)
+    {
+        try {
+            const response=await this.userRepo.isAdmin(id);
+            return response;
+        } catch (error) {
+            console.log("somthing went wrong in service layer");
+            throw{error};
+        }
       
+}
 }
 module.exports=userServices;

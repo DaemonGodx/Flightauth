@@ -9,5 +9,18 @@ const validateAuth = (req, res, next) => {
     }
     next();
 };
+const validateisadmin = (req, res, next) => {
+    if (!req.body.id) {
+        return res.status(400).json({   
+            message: "id is missing",
+            error: "Bad Request id is missing",
+            success: false,
+            data: {}
+        });
+    }
+    next();
+}
 
-module.exports = {validateAuth};
+module.exports = {validateAuth,
+    validateisadmin
+};
