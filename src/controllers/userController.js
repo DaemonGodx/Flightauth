@@ -18,15 +18,14 @@ const create= async (req ,res)=>{
     }
     catch(error)
     {
-        return res.status(500).json({
-        data:{},
-        message:"creation failed",
-        success:false,
-        error:error,
-
-    })
-   
-}
+        // console.log(error);
+        return res.status(error.statusCode).json({
+            message: error.message,
+            data: {},
+            success: false,
+            err: error.explanation
+        });
+    }
 }
 const signin= async (req ,res)=>{
     try{
